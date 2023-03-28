@@ -1,4 +1,4 @@
-## React Crud:
+## Vacation dream:
 
 This project is a website which gives customers the ability to follow after vacations
 
