@@ -1,0 +1,45 @@
+h1 {
+    margin: 50px auto;
+    text-align: center;
+}
+
+.login {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    background: #ddd;
+    border: 1px solid black;
+    box-shadow: 5px 5px 10px;
+    border-radius: 20px;
+    max-width: 40%;
+    margin: auto;
+    padding: 2%;
+}
+
+.login label {
+    flex-basis: 48%;
+    text-align: left;
+    margin-bottom: 1%;
+}
+
+.login input {
+    width: 100%;
+}
+
+.Login span {
+    display: block;
+}
+
+.login button {
+    margin: auto;
+}
+
+.box {
+    display: inline-block;
+    margin: 10px;
+    padding: 0 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px;
+    text-align: left;
+  }
