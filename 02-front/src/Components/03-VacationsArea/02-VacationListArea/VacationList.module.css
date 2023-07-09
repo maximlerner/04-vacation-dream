@@ -1,0 +1,49 @@
+
+.vacationsList {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    justify-content: center;
+    gap: 4rem;
+    padding: 2rem 0;
+    
+    /* Test: the product list will be limited to only given height of the component */
+    height: 100%;
+    overflow: auto;
+    align-items: center;
+    grid-template-rows: 41px 0.5fr;
+}
+
+.noResultsGrid {
+    grid-template-rows: 0.1fr 0.5fr;
+}
+
+.noResults {
+    align-self: start;
+}
+
+/***********************************/
+/* Below 1216px (Lanscape Tablets) done */
+/***********************************/
+@media(max-width: 76em) {
+
+    .vacationsList {
+        grid-template-columns: 1fr 1fr;
+    }
+
+}
+
+/***********************************/
+/* Below 550px (Lanscape Tablets) done */
+/***********************************/
+@media(max-width: 35em) {
+
+    .vacationsList {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+.vacationsList > p {
+    text-align: center;
+    grid-column: 1 / -1;
+}

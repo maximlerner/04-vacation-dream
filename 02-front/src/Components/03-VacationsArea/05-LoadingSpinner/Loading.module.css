@@ -1,0 +1,10 @@
+
+.spinner {
+    grid-column: 1 / -1;
+    margin: auto;
+}
+
+.spinnerImage {
+    width: 6rem;
+    padding-bottom: 25rem;
+}

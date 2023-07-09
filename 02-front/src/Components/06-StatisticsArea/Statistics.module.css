@@ -1,0 +1,28 @@
+.statisticsTitle {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.statisticsDescription {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.statistics {
+    display: flex;
+    justify-content: center;
+}
+.chart {
+    margin-top: 12rem;
+    border: 1px solid black;
+    background: #f1f3f5;
+}
+
+/***********************************/
+/* Below 576px (Lanscape Tablets) done */
+/***********************************/
+@media(max-width: 36em) {
+
+    /* .chart {
+      max-width: 20rem;
+    } */
+  }

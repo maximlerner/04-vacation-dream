@@ -1,0 +1,120 @@
+
+.card {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 25rem ;
+    height: 31rem;
+    background-color: aliceblue;
+    border: 1px solid cadetblue;
+    border-radius: 10px;
+    box-shadow: 5px 5px 10px;
+    align-items: center;
+}
+
+.cardImage {
+    margin-top: 1rem;
+    border-radius: 6px;
+    max-height: 55%;
+    max-width: 92%;
+}
+
+.cardTitle {
+    text-align: center;
+    text-decoration: underline;
+}
+
+.cardDescription {
+    margin-top: 1rem;
+    text-align: center;
+    color: #0b7285;
+    font-weight: 500;
+    font-size: 1.1rem;
+    padding: 0 1rem;
+}
+
+.dates {
+    margin-top: 0.6rem;
+    display: flex;
+    gap: 2rem;
+}
+
+.cardFooter {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 2rem;
+    margin-top: 1rem;
+}
+
+.subscribe,
+.edit,
+.delete {
+    font-size: 1.6rem;
+    z-index: 1;
+}
+
+.subscribeActive {
+    color: #fdbe00;
+    position: relative;
+    z-index: 1;
+}
+
+.actions {
+    z-index: 1;
+    position: relative;
+}
+
+.actionsUser::before {
+    content: "";
+    position: absolute;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: #0b7285;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    z-index: -1; 
+}
+
+.subscribe:hover,
+.subscribe:active,
+.delete:hover,
+.delete:active,
+.edit:hover,
+.edit:active {
+    cursor: pointer;
+}
+
+
+.price {
+    grid-column: 2 / 4;
+}
+.actionEdit {
+    grid-column: 4 / -1;
+}
+
+.edit {
+    color: #094f5b;
+    font-size: 1.8rem;
+}
+
+.delete {
+    color: #e03131;
+}
+
+/***********************************/
+/* Below 576px (Lanscape Tablets) done */
+/***********************************/
+@media(max-width: 36em) {
+
+    .card {
+        width: 22rem ;
+        height: 30rem;
+    }
+
+  }
+  .actionsUser {
+    z-index: 1;
+    position: relative;
+}

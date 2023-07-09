@@ -1,0 +1,49 @@
+.sort {
+  margin: auto;
+  display: flex;
+  grid-column: 1 / -1;
+  gap: 1rem;
+  align-items: center;
+  max-width: 38rem;
+}
+
+.filter {
+  padding: 0.6rem;
+}
+
+.sort > p {
+  font-size: 1.2rem;
+}
+
+.sort > select {
+  border-radius: 6px;
+  /* border-top-left-radius: 6px;
+    border-top-right-radius: 6px; */
+}
+
+.btn {
+  grid-column: 1/-1;
+  padding: 0.6rem 2rem;
+  border: none;
+  border-radius: 10px;
+  background-color: darkcyan;
+  box-shadow: 4px 4px 8px rgba(113, 119, 113, 0.766);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.btn:hover,
+.btn:active {
+  cursor: pointer;
+}
+
+/***********************************/
+/* Below 576px (Lanscape Tablets) done */
+/***********************************/
+@media (max-width: 36em) {
+  .sort {
+    display: grid;
+    width: 80%;
+  }
+}

@@ -1,0 +1,40 @@
+
+.paginaion {
+    display: flex;
+    grid-column: 1 / -1;
+    margin: auto;
+    gap: 1rem;
+    align-self: center;
+}
+
+.btn {
+    background-color: #ffffff00;
+    border: none;
+    font-size: 1.2rem;
+    color: darkcyan;
+}
+
+
+.arrows {
+    align-self: center;
+    font-size: 1.6rem;
+}
+
+.btn:hover,
+.btn:active,
+.arrows:hover,
+.arrows:active {
+    cursor: pointer;
+}
+
+.pageIndicator {
+    font-size: 1.2rem;
+    font-weight: 500;
+    padding-bottom: 0.2rem;
+}
+
+.hide {
+    border: none;
+    font-size: 1.2rem;
+    opacity: 0;
+}

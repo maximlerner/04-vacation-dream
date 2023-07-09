@@ -1,0 +1,99 @@
+
+.newVacationTitle {
+    padding: 2rem 0;
+    text-align: center;
+}
+
+.vacationForm {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    background: #ddd;
+    box-shadow: 5px 5px 10px;
+    border-radius: 10px;
+    max-width: 40%;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.fullRow {
+    grid-column: 1/ -1;
+}
+
+
+.inputClass,
+.uploadBox {
+    width: 100%;
+    margin-top: 0.2rem;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 6px;
+}
+
+.btn {
+    grid-column: 1/-1;
+    padding: 0.6rem 2rem;
+    border: none;
+    border-radius: 10px;
+    background-color: #0d6efd;
+    box-shadow: 4px 4px 8px  rgba(8, 54, 203, 0.604);
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.uploadBox {
+  background-color: #fff;
+  padding: 0;
+  height: 2.4rem;
+  cursor: pointer;
+}
+
+::-webkit-file-upload-button {
+  color: #fff;
+  background-color: #0d6efd;
+  border: none;
+  padding: 0.6rem;
+  height: 2.4rem;
+  border-radius: 6px;
+  outline: none;
+  cursor: pointer;
+}
+
+.errorMessage {
+  display: block;
+  color: red;
+  text-align: center;
+  font-weight: 600;
+  margin-top: 0.2rem;
+  opacity: 0;
+}
+
+.error {
+  opacity: 1;
+}
+
+::-webkit-datetime-edit { 
+  width: 100%;
+}
+
+.color {
+  background-color: #fff;
+}
+
+.MuiTypography-root {
+  display: none;
+}
+
+/***********************************/
+/* Below 576px (Lanscape Tablets) done */
+/***********************************/
+@media(max-width: 36em) {
+
+  .vacationForm {
+    grid-template-columns: 1fr;
+    max-width: 90%;
+    padding: 1rem;
+    margin-bottom: 2rem;
+  }
+}

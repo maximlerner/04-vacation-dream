@@ -1,0 +1,66 @@
+ .header {
+   display: grid;
+   grid-template-columns: 1.5fr 1fr;
+   height: 6rem;
+   box-shadow: 5px 5px 10px;
+ }
+
+ .mainTitle {
+  grid-column: 1 / -1;
+   text-align: center;
+}
+
+.userTitle {
+  font-size: 1.2rem;
+  font-weight: 600;
+  display: inline-block;
+  justify-self: end;
+  margin-right: 6rem;
+}
+
+.dropMenuBtn {
+  display: none;
+}
+
+/***********************************/
+/* Below 576px (Lanscape Tablets) done */
+/***********************************/
+@media(max-width: 36em) {
+
+  
+  .header {
+    display: grid;
+    grid-template-columns: repeat(6,1fr) 1fr;
+    position: relative;
+  }
+
+  .mainTitle {
+    width: 100%;
+    margin-top: 0.8rem;
+    left: 50%;
+    grid-column: 1 / -1;
+    font-size: 1.4rem;
+    order: 1;
+  }
+
+  .userTitle {
+    display: inline-block;
+    margin: 0;
+    padding: 0.8rem 0 0 1rem;
+    grid-column: 1 /6;
+    order: -1;
+    justify-self: start
+    ;
+  }
+  
+  
+  .dropMenuBtn {
+    display: inline-block;
+    margin-top: 0.8rem;
+    font-size: 1.6rem;
+    z-index: 9999;
+    grid-column: 7 /8;
+    order: 0;
+  }
+
+}
