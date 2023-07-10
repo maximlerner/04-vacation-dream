@@ -73,6 +73,11 @@
   opacity: 1;
 }
 
+.finalError {
+  opacity: 1;
+  grid-column: 1 / -1;
+}
+
 ::-webkit-datetime-edit { 
   width: 100%;
 }
@@ -97,3 +102,24 @@
     margin-bottom: 2rem;
   }
 }
+
+.calendar {
+  display: inline-block;
+  border-radius: 6px;
+  padding: 0.5rem 0.6rem;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 0.2rem;
+}
+
+/* input::placeholder {
+  color: black;
+}  */
+
+::-webkit-datetime-edit-text {
+  color: #000000;
+}
+
+
+
+

@@ -79,7 +79,7 @@ router.patch('/:id',verifyToken, async (request: Request, response: Response,nex
 });
 
 // Example: delete vacation from http://localhost:3001/api/vacations/1
-router.delete('/:id',verifyAdmin,async (request: Request, response: Response,next: NextFunction) => {
+router.delete('/:id',async (request: Request, response: Response,next: NextFunction) => {
     try {
         const id = Number(request.params.id);
         await vacationLogic.deleteVaction(id);
@@ -90,6 +90,7 @@ router.delete('/:id',verifyAdmin,async (request: Request, response: Response,nex
     }
 });
 
+// Example: get image vacation from http://localhost:3001/api/vacations/images/6b2a4c61-b09b-4c76-ac78-2f5609602efd.jpeg
 router.get("/images/:imageName", (request: Request, response: Response, next: NextFunction) => {
     try {
         const imageName = request.params.imageName;

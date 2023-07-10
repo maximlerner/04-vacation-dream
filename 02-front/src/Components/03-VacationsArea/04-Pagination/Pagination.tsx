@@ -8,27 +8,27 @@ interface PaginationProps {
     lastPage:number;
 
 }
-function Pagination(props: PaginationProps):JSX.Element {
+function Pagination({currentPage,onChangePage,lastPage}: PaginationProps):JSX.Element {
 
     const firstPage = 1;
 
     function handleArrowLeft() {
-        if(firstPage < props.currentPage) props.onChangePage(props.currentPage - 1);
+        if(firstPage < currentPage) onChangePage(currentPage - 1);
     }
     function handleArrowRight() {
-        if(props.lastPage > props.currentPage) props.onChangePage(props.currentPage + 1);
+        if(lastPage > currentPage) onChangePage(currentPage + 1);
     }
     
     function handleButtons(e: string) {
-        if(e === "First") props.onChangePage(1);
-        if(e === "Last") props.onChangePage(props.lastPage);
+        if(e === "First") onChangePage(1);
+        if(e === "Last") onChangePage(lastPage);
     }
     return <div className={classes.paginaion}>
-        <FaArrowAltCircleLeft key="left" className={props.currentPage > firstPage ? classes.arrows:classes.hide} onClick={handleArrowLeft} />
+        <FaArrowAltCircleLeft key="left" className={currentPage > firstPage ? classes.arrows:classes.hide} onClick={handleArrowLeft} />
         <button className={classes.btn} value="First" onClick={(e) => handleButtons(e.currentTarget.value)}>First page</button>
-        <p className={classes.pageIndicator}>{props.currentPage} / {props.lastPage}</p>
+        <p className={classes.pageIndicator}>{currentPage} / {lastPage}</p>
         <button className={classes.btn} value="Last" onClick={(e) => handleButtons(e.currentTarget.value)}>Last page</button>
-        <FaArrowAltCircleRight key="right" className={props.currentPage < props.lastPage ? classes.arrows:classes.hide} onClick={handleArrowRight} />
+        <FaArrowAltCircleRight key="right" className={currentPage < lastPage ? classes.arrows:classes.hide} onClick={handleArrowRight} />
     </div>
 }
 

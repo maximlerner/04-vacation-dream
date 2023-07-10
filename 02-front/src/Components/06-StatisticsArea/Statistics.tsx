@@ -1,32 +1,21 @@
 import { useState,useEffect } from "react";
+import {BarChart,Bar,XAxis,YAxis} from "recharts";
+
 import classes from "./Statistics.module.css";
-
-import {
-    BarChart,
-    Bar,
-    XAxis,
-    YAxis,
-  } from "recharts";
 import VacationModel from "../../Models/VacationModel";
+import vacationService from "../../Services/VacationService";
   
-interface StatisticsProps {
-    vacations : VacationModel[];
-}
-function Statistics({vacations}: StatisticsProps):JSX.Element {
+function Statistics():JSX.Element {
     
+    const [vacationsList, setVacationList] = useState<VacationModel[]>([]);
     const chartData:any = [];
-    // const [height,setHeight] = useState(180);
-    // const [width,setWidth] = useState(675);
 
-    // useEffect(() => {
-    //     if(window.innerHeight < 576) {
-    //         setHeight(() => 90);
-    //         setWidth(() => 337.5);
-    //     }
-    // },[])
+    useEffect(() => {
+        vacationService.getAllVacations(setVacationList);
+      })
 
     // Here we add objects to chartData only if the vacation have followers
-    vacations.map((vacation) => {
+    vacationsList.map((vacation) => {
         if(vacation.followers > 0) {
             console.log("line 31")
             chartData.push({destination: vacation.destination, followers: vacation.followers});

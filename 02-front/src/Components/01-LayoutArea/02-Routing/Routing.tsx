@@ -1,6 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 
-import VacationModel from "../../../Models/VacationModel";
 import VacationsList from "../../03-VacationsArea/02-VacationListArea/VacationList";
 import VacationForm from "../../04-VacationFormsArea/01-VacationForm/VacationForm";
 import Register from "../../05-AuthenticationArea/06-RegisterArea/Register";
@@ -11,24 +10,12 @@ import About from "../../07-AboutArea/About";
 import Page404 from "../../08-RoutNotFoundArea/Page404";
 
 interface RoutingProps {
-  vacations: VacationModel[];
-  onSetVacationList: Function;
-  filteredVacations: VacationModel[];
-  vacationToUpdate: Object;
-  onUpdateVacation: any;
   onSetUser: Function;
   userType: string;
-  filtered: boolean;
-  onFilter: Function;
-  onFilterVacations: Function;
-  error: string;
-
 }
 
 function Routing(
-  {vacations,onSetVacationList,filteredVacations,vacationToUpdate,onUpdateVacation,
-    onSetUser,userType,filtered,onFilter,onFilterVacations,error
-  }:RoutingProps): JSX.Element {
+  {onSetUser,userType}:RoutingProps): JSX.Element {
   return (
     <>
       <Routes>
@@ -37,15 +24,7 @@ function Routing(
           path="/"
           element={
             <VacationsList
-              onSetVacationList={onSetVacationList}
               userType={userType}
-              onUpdateVacation={onUpdateVacation}
-              filtered={filtered}
-              onFilter={onFilter}
-              cards={vacations}
-              filteredVacations={filteredVacations}
-              onFilterVacations={onFilterVacations}
-              error={error}
             />
           }
         />
@@ -54,15 +33,7 @@ function Routing(
           path="/home"
           element={
             <VacationsList
-              onSetVacationList={onSetVacationList}
               userType={userType}
-              onUpdateVacation={onUpdateVacation}
-              filtered={filtered}
-              onFilter={onFilter}
-              cards={vacations}
-              filteredVacations={filteredVacations}
-              onFilterVacations={onFilterVacations}
-              error={error}
             />
           }
         />
@@ -71,7 +42,7 @@ function Routing(
         <Route
           path="/addVacation"
           element={
-            <VacationForm setVacationsList={onSetVacationList} />
+            <VacationForm  />
           }
         />
 
@@ -79,7 +50,7 @@ function Routing(
         <Route
           path="/editVacation/:id"
           element={
-            <VacationForm setVacationsList={onSetVacationList} vacationToUpdate={vacationToUpdate}/>
+            <VacationForm />
           }
         />
 
@@ -91,7 +62,7 @@ function Routing(
         {/* That route is for statistics */}
         <Route
           path="/statistics"
-          element={<Statistics vacations={vacations} />}
+          element={<Statistics />}
         />
 
         {/* That route is for logout */}

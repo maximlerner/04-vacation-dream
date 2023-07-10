@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import VacationModel from "../../../Models/VacationModel";
 import classes from "./VacationList.module.css";
@@ -6,65 +6,69 @@ import Sorting from "../03-Sorting/Sorting";
 import Card from "../01-VacationCard/Card";
 import Pagination from "../04-Pagination/Pagination";
 import LoadingSpinner from "../05-LoadingSpinner/LoadingSpinner";
+import vacationService from "../../../Services/VacationService";
+import vacationsStore from "../../../Redux/Store";
 
 interface MainProps {
-  cards: VacationModel[];
-  onSetVacationList: Function;
-  filteredVacations: VacationModel[];
-  onUpdateVacation: Function;
   userType: string;
-  filtered: boolean;
-  onFilter: Function;
-  onFilterVacations: Function;
-  error: string;
 }
 
-function VacationsList({
-  cards,onSetVacationList,filteredVacations,onUpdateVacation,userType,filtered,onFilter,onFilterVacations,error
-}: MainProps): JSX.Element {
-
+function VacationsList({userType}: MainProps): JSX.Element {
+  const [vacationList, setVacationList] = useState<VacationModel[]>([]);
+  const [filteredVacations,onSetFilterVacations] = useState<VacationModel[]>([]);
+  const [filtered,setFiltered] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage, setCardsPerPage] = useState(3);
+  const [deleting,setDeleting] = useState(false);
   
-  const length = filtered ? filteredVacations.length : cards.length;
+  const length = filtered ? filteredVacations.length : vacationsStore.getState().vacations.length;
   const lastCardIndex = currentPage * cardsPerPage;
   const firstCardIndex = lastCardIndex - cardsPerPage;
-  const currentCardsOriginal = cards.slice(firstCardIndex, lastCardIndex);
+  const currentCardsOriginal = vacationsStore.getState().vacations.slice(firstCardIndex, lastCardIndex);
   const currentCardsFiltered = filteredVacations.slice(firstCardIndex,lastCardIndex);
-  const lastPage = Math.ceil(cards.length / cardsPerPage);
+  const lastPage = Math.ceil(filtered ? currentCardsFiltered.length / cardsPerPage :vacationsStore.getState().vacations.length / cardsPerPage);
+
+
+  useEffect(() => {
+    vacationService.getAllVacations(setVacationList, setError);
+    setDeleting(false);
+  })
+
+
+  const [error,setError] = useState("");
 
   return (
     <div className={classes.vacationsList}>
       <Sorting
-        vacations={cards}
-        // filtered={filtered}
-        // filteredVacations={filteredVacations}
-        onFilter={onFilter}
-        onFilterVacations={onFilterVacations}
+        vacations={vacationList}
+        onFilter={setFiltered}
+        onFilterVacations={onSetFilterVacations}
       />
       {/* Will render all vacations if vacations are not filtered */}
       {!filtered &&
-        currentCardsOriginal.map((vacation) => {
+        currentCardsOriginal.map((vacation,index) => {
           return (
             <Card
-              onSetVacationList={onSetVacationList}
+              onSetCurrentPage={setCurrentPage}
+              setVacations={setVacationList}
               userType={userType}
-              key={vacation.vacationID}
-              onUpdateVacation={onUpdateVacation}
+              key={index}
               vacation={vacation}
+              setDeleting={setDeleting}
             />
           );
         })}
       {/* Will render only filtered vacation if vacations are filtered  */}
       {filtered &&
-        currentCardsFiltered.map((vacation) => {
+        currentCardsFiltered.map((vacation,index) => {
           return (
             <Card
-              onSetVacationList={onSetVacationList}
+              setVacations={setVacationList}
+              onSetCurrentPage={setCurrentPage}
               userType={userType}
-              key={vacation.vacationID}
-              onUpdateVacation={onUpdateVacation}
+              key={index}
               vacation={vacation}
+              setDeleting={setDeleting}
             />
           );
         })}
@@ -75,10 +79,10 @@ function VacationsList({
           onChangePage={setCurrentPage}
         />
       )}
-      {length < 1 && cards.length !== 0 && (
+      {length < 1 && vacationList.length !== 0 && (
         <p className={classes.noResults}>No Results</p>
       )}
-      {(cards.length === 0 && error === "")  && <LoadingSpinner />}
+      {(vacationsStore.getState().vacations.length === 0 && error === "")  && <LoadingSpinner />}
       {/* <p>{error ? error : ""}</p> */}
     </div>
   );

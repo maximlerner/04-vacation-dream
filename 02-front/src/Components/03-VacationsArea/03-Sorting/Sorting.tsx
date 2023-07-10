@@ -4,8 +4,6 @@ import classes from "./Sorting.module.css";
 
 interface SortingProps {
     vacations: VacationModel[];
-    // filteredVacations: VacationModel[];
-    // filtered: boolean;
     onFilter: Function;
     onFilterVacations: Function;
 }
@@ -21,6 +19,11 @@ function Sorting({vacations,onFilter,onFilterVacations}: SortingProps ):JSX.Elem
     // Sort by destination
     function handleSortByDestination(e: any) {
         SortingHelpers.filterAlfabet(e, onFilter ,onFilterVacations ,vacations);
+    }
+    // Sort by destination
+    function handleRemoveSorting() {
+        onFilter(false);
+        onFilterVacations([]);
     }
 
     return <div className={classes.sort}>
@@ -39,7 +42,7 @@ function Sorting({vacations,onFilter,onFilterVacations}: SortingProps ):JSX.Elem
             <option value="descending">Descending order</option>
             <option value="ascending">Ascending order</option>
         </select>
-        <button className={classes.btn}>Remove all filters</button>
+        <button className={classes.btn} onClick={handleRemoveSorting}>Remove all filters</button>
     </div>
 }
 

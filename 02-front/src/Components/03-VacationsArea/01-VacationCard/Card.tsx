@@ -5,32 +5,34 @@ import classes from "./Card.module.css";
 import VacationModel from "../../../Models/VacationModel";
 import config from "../../../Utils/Config";
 import VacationService from "../../../Services/VacationService";
+import vacationsStore from "../../../Redux/Store";
 
 interface CardProps {
   vacation: VacationModel;
-  onSetVacationList: Function;
-  onUpdateVacation: Function;
   userType: string;
+  setDeleting: Function;
+  onSetCurrentPage: Function;
+  setVacations: Function;
 }
 
-function Card({vacation,onSetVacationList,onUpdateVacation,userType}: CardProps): JSX.Element {
-  const newFormatStart = new Date(
-    vacation.dateStart
-  ).toLocaleDateString();
+function Card({vacation,userType,setDeleting,onSetCurrentPage,setVacations}: CardProps): JSX.Element {
+  const newFormatStart = new Date(vacation.dateStart).toLocaleDateString();
   const newFormatEnd = new Date(vacation.dateStart).toLocaleDateString();
 
   const [activeSubscribe, setActiveSubscribe] = useState(false);
   const navigate = useNavigate();
 
+  console.log(vacationsStore.getState().vacations);
+
   function handleNavigateToUpdate(vacation: VacationModel) {
-    const id = vacation.vacationID
-    onUpdateVacation(vacation);
+    console.log(vacation)
+    const id = vacation.vacationID;
     navigate(`/editVacation/${id}`);
   }
-
+  
   function handleDeleteVacation(id: number) {
-    VacationService.deleteVacation(id, onSetVacationList);
-    // navigate("/home");
+    VacationService.deleteVacation(id,setDeleting,setVacations);
+    onSetCurrentPage(1);
   }
 
   return (

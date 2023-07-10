@@ -17,12 +17,5 @@ code {
   margin-top: 0;
 }
 
-.calendar {
-  background-color: #fff;
-  display: inline-block;
-  border-radius: 4px;
-  width: 100%;
-  overflow: hidden;
-  margin-top: 0.2rem;
-}
+
 

@@ -6,34 +6,48 @@ import classes from "./VacationForm.module.css";
 import VacationModel from "../../../Models/VacationModel";
 import CustomDateInput from "../02-DateInput/CustomDateInput";
 import vacationService from "../../../Services/VacationService";
+import vacationsStore from "../../../Redux/Store";
 
-interface VacationFormProps {
-  vacationToUpdate?: any;
-  setVacationsList?: any;
+const empty = {
+  description: "",
+  destination : "",
+  dateStart : new Date,
+  dateEnd : new Date,
+  price : 0,
+  followers: 0,
+  imageName: ""
 }
 
-function VacationForm({vacationToUpdate,setVacationsList}: VacationFormProps): JSX.Element {
-
-  //Initial values depends on the route
-  const initialDescription = vacationToUpdate && vacationToUpdate.description || "";
-  const initialDestination = vacationToUpdate && vacationToUpdate.destination || "";
-  const initialStartDate = vacationToUpdate && vacationToUpdate.dateStart || new Date;
-  const initialEndDate = vacationToUpdate && vacationToUpdate.dateEnd || new Date;
-  const initialPrice = vacationToUpdate && vacationToUpdate.price || null;
+function VacationForm(): JSX.Element {
 
   // States
-  const [dateStart, setDateStart] = useState(initialStartDate);
-  const [dateEnd, setDateEnd] = useState(initialEndDate);
-  const [newVacation, setNewVacation] = useState(true);
+  const v = vacationsStore.getState().vacations;
   const { register, handleSubmit,formState,control} = useForm<VacationModel>();
   const [error,setError] = useState("error");
+  const [newVacation,setNewVacation] = useState(true);
   const navigate = useNavigate();
   const {id} = useParams();
 
+  const [vacationToUpdate,setVacationToUpdate] = useState(empty);
+
   useEffect(() => {
-    // The form will display the edit button only if vacation object exists if not considered as new vacation
-    if (vacationToUpdate?.vacationID) setNewVacation(false);
-  }, []);
+    if (id) {
+      const vacation = vacationsStore.getState().vacations.find(
+        (vacation) => vacation.vacationID === Number(id)
+      );
+      if (vacation) {
+        setVacationToUpdate(vacation);
+        setNewVacation(false);
+      }
+    }
+  }, [id]);
+
+  //Initial values depends on the route
+  const initialDescription = id ? vacationToUpdate?.description : "";
+  const initialDestination = id ? vacationToUpdate?.destination : "";
+  const initialStartDate = id ? vacationToUpdate?.dateStart : new Date;
+  const initialEndDate = id ? vacationToUpdate?.dateEnd : new Date;
+  const initialPrice = id ? vacationToUpdate?.price : 0;
 
   async function submit(vacation: VacationModel) {
     try {
@@ -41,15 +55,14 @@ function VacationForm({vacationToUpdate,setVacationsList}: VacationFormProps): J
       vacationsWithDates.dateStart = new Date(vacation.dateStart);
       vacationsWithDates.dateEnd = new Date(vacation.dateEnd);
 
-      if(vacationToUpdate && id) {
+      if(id && vacationToUpdate) {
         vacationsWithDates.followers = vacationToUpdate.followers;
         vacationsWithDates.imageName = vacationToUpdate.imageName;
         await vacationService.updateVacation(+id,vacationsWithDates);
       }
-      if(!vacationToUpdate) {
+      if(newVacation) {
         await vacationService.createVacation(vacationsWithDates);
       }
-      vacationService.getAllVacations(setVacationsList);
       navigate("/home")
     } 
     catch(err:any) {
@@ -120,28 +133,26 @@ function VacationForm({vacationToUpdate,setVacationsList}: VacationFormProps): J
         {/* Starting Date */}
         <label>
           <span>Starting Date:</span>
-          <div className="calendar">
-            {/* <CustomDateInput date={dateStart} onDateChange={setDateStart}/> */}
-            <CustomDateInput name={"dateStart"} control={control} />
-          </div>
-          <span className={classes.noError}>Starting Date is required</span>
+            <CustomDateInput name={"dateStart"} control={control} error="Start date is required" />
+          <span className={formState.errors.dateStart?.message ?`${classes.errorMessage} ${classes.error}` : classes.errorMessage }>
+            {formState.errors.dateStart ? formState.errors.dateStart?.message : "error"}
+          </span>
         </label>
 
         {/* Ending Date */}
         <label>
           <span>Ending Date:</span>
-          <div className="calendar">
-            {/* <CustomDateInput date={dateStart} onDateChange={setDateEnd}/>  */}
-            <CustomDateInput name="dateEnd" control={control}  /> 
-          </div>
-          <span className={classes.noError}>Ending Date is required</span>
+            <CustomDateInput name="dateEnd" control={control} error="End date is required"  /> 
+            <span className={formState.errors.dateEnd?.message ?`${classes.errorMessage} ${classes.error}` : classes.errorMessage }>
+            {formState.errors.dateEnd ? formState.errors.dateEnd?.message : "error"}
+          </span>
         </label>
 
         {/* Price */}
         <label>
           <span>Price:</span>
           <input
-            placeholder="Price" type="number" className={classes.inputClass} defaultValue={initialPrice} step="0.01"
+            placeholder="Price" type="number" className={classes.inputClass} defaultValue={initialPrice} step="0.01" 
             {...register("price",{
               required: {value: true,message: "Price is required"},
               min:{value : 0,message:"Price can't be nagative"},
@@ -156,8 +167,9 @@ function VacationForm({vacationToUpdate,setVacationsList}: VacationFormProps): J
 
         {/* Submit */}
           <button className={classes.btn} type="submit">
-            {vacationToUpdate ? 'Edit vacation':'Add new vacation'}
+            {!newVacation ? 'Edit vacation':'Add new vacation'}
           </button>
+          {<span className={error !== "error" ?`${classes.errorMessage} ${classes.finalError}`: classes.errorMessage}>{error}</span>}
       </form>
     </section>
   );
@@ -171,4 +183,16 @@ export default VacationForm;
 
 
 
+
+function setNewVacation(arg0: boolean) {
+  throw new Error("Function not implemented.");
+}
+
+function navigate(arg0: string) {
+  throw new Error("Function not implemented.");
+}
+
+function setError(data: any) {
+  throw new Error("Function not implemented.");
+}
 
