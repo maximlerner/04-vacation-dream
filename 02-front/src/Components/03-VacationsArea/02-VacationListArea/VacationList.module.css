@@ -19,6 +19,7 @@
 
 .noResults {
     align-self: start;
+    font-size: 1.6rem;
 }
 
 /***********************************/
@@ -29,16 +30,18 @@
     .vacationsList {
         grid-template-columns: 1fr 1fr;
     }
-
+    
 }
 
 /***********************************/
-/* Below 550px (Lanscape Tablets) done */
+/* Below 550px (Phones) done */
 /***********************************/
 @media(max-width: 35em) {
-
+    
     .vacationsList {
+        
         grid-template-columns: 1fr;
+        grid-template-rows: 10rem 0.5fr;
     }
 
 }

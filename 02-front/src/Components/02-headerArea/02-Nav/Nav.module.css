@@ -1,7 +1,5 @@
 
 .nav {
-    /* display: flex;
-    gap: 1rem; */
     margin-left: 4rem;
     z-index: 10;
 }
@@ -24,7 +22,7 @@
 }
 
 /***********************************/
-/* Below 550px (Lanscape Tablets) done */
+/* Below 550px (Phones) done */
 /***********************************/
 @media(max-width: 36em) {
 

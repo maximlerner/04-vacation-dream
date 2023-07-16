@@ -1,14 +1,18 @@
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import UserModel from "../../../Models/UserModel";
 import classes from "./Register.module.css";
-import config from "../../../Utils/Config";
+import authService from "../../../Services/AuthService";
+import { register as registerToken } from "../../../Redux/UserSlice";
 
 function Register():JSX.Element {
   const [error,setError] = useState(null);
   const { register, handleSubmit,formState ,reset} = useForm<UserModel>();
+  const navigator = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     reset();
@@ -17,10 +21,10 @@ function Register():JSX.Element {
   async function  submit(user: UserModel) {
     try {
       setError(null);
-      const response = await axios.post<UserModel>(`${config.urls.register}`,user)
-      const addedUser = response.data;
-      console.log(addedUser);
-      reset();
+      const token = await authService.register(user);
+      console.log(token);
+      dispatch(registerToken(token));
+      navigator("/home");
     } 
     catch(err:any) {
       setError(err.response.data);

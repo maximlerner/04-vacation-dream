@@ -47,7 +47,38 @@ async function saveImage(vacation: VacationModel) {
     return vacation.imageName;
 }
 
+    // That function recieves an object and returns an object with invalidExpression property message and isForbidden property boolean
+    function checkForbidenExpresions(object: object) {
+
+        // 1) Check if the type of parameter is object
+        if(typeof object === "object") {
+  
+          // a) initial values and values array of the given object
+          const result = {invalidExpression: "",isForbidden: false}
+          const forbidenExpressionArray = ["'",'"',"select","insert","update"];
+          const objectValuesArray = Object.values(object).toLocaleString();
+          
+          // b) If the objectValuesArray includes any forbidden expression function will return true inside isForbidden property
+          for(let i = 0; i < forbidenExpressionArray.length;i++) {
+            if (objectValuesArray.toLowerCase().includes(forbidenExpressionArray[i])) {
+              result.invalidExpression = `using ${forbidenExpressionArray[i]} is not allowed`;
+              result.isForbidden = true
+              'using' + forbidenExpressionArray[i] + 'is not allowed'
+  
+              // Return on the first time condition is true
+              return result
+            }
+          }
+          // c) If the objectValuesArray doesn't includes any forbidden expression function will return false inside isForbidden property
+          return result
+        // 1) If the user inserted incorrect type of data function will return false
+        } else {
+          return false
+        }
+      }
+
 export default {
     safeDelete,
-    saveImage
+    saveImage,
+    checkForbidenExpresions
 };

@@ -1,20 +1,20 @@
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 import classes from "./Login.module.css"
-import config from "../../../Utils/Config";
 import CredentialsModel from "../../../Models/CredentialsModel";
+import authService from "../../../Services/AuthService";
 
-interface LoginProps {
-  onSetUser: Function;
-}
-function Login({onSetUser}: LoginProps):JSX.Element {
+import { useDispatch } from "react-redux";
+import { login } from "../../../Redux/UserSlice";
+
+function Login():JSX.Element {
 
   const [error,setError] = useState(null);
   const { register, handleSubmit,formState ,reset} = useForm<CredentialsModel>();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     reset();
@@ -23,10 +23,10 @@ function Login({onSetUser}: LoginProps):JSX.Element {
   async function  submit(credentials: CredentialsModel) {
     try {
       setError(null);
-      const response = await axios.post<CredentialsModel>(`${config.urls.login}`,credentials)
-      const token = response.data;
-      console.log(token);
-      if(token) navigate("/home");
+      const token = await authService.login(credentials);
+      dispatch(login(token));
+      alert("logged in successfully")
+      navigate("/home");
       reset();
     } 
     catch(err:any) {

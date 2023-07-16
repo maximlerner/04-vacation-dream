@@ -39,11 +39,17 @@
 }
 
 /***********************************/
-/* Below 576px (Lanscape Tablets) done */
+/* Below 576px (Phones) done */
 /***********************************/
 @media (max-width: 36em) {
   .sort {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     width: 80%;
+    margin-bottom: 6rem;
+  }
+
+  .filter {
+    width: 90%;
   }
 }

@@ -5,6 +5,12 @@ import Role from "../03-Models/role";
 import UserModel from "../03-Models/user-model";
 import dal from "../04-DAL/dal";
 
+async function getUser(credentials: any): Promise<UserModel> {
+    const getUserSQL = `Select * FROM users_list WHERE userName = '${credentials.userName}' AND password = '${credentials.password}'`;
+    const user = await dal.execute(getUserSQL);
+    return user;
+}
+
 async function register(user:UserModel): Promise<string> {
 
     // Get all users:
@@ -31,14 +37,15 @@ async function register(user:UserModel): Promise<string> {
     '${user.password}',
     '${user.role}')`
 
-    await dal.execute(addUserSql)
+    await dal.execute(addUserSql);
+
+    const dbUser = await getUser({userName:user.userName,password: user.password});
 
     // Remove password
-    delete user.password;
+    delete dbUser.password;
 
-    // Generate new token;
-    const token = jwt.getNewToken(user);
-
+    // Generate and send to the client new token;
+    const token = jwt.getNewToken(dbUser);
     return token;
 }
 

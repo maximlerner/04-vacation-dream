@@ -44,49 +44,4 @@ interface CustomDateInputProps {
 
 export default CustomDateInput;
 
-//////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-// import { useForm, Controller } from "react-hook-form";
-// import dayjs from "dayjs";
-// import { DemoItem } from "@mui/x-date-pickers/internals/demo";
-// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-// import { DatePicker } from "@mui/x-date-pickers/DatePicker";
-
-
-// interface CustomDateInputProps {
-//     date:Date 
-//     onDateChange: Function;
-//   }
-  
-//   function CustomDateInput({date,onDateChange}:CustomDateInputProps) {
-
-//     const handleDateChange = (newDate: any) => {
-//       console.log(newDate,typeof newDate)  
-//       onDateChange(newDate);
-//     };
-//     return (
-//       <LocalizationProvider dateAdapter={AdapterDayjs}>
-//         <DemoItem>
-//           <DatePicker
-//             defaultValue={dayjs(date)}
-//             disablePast={true}
-//             slotProps={{ textField: { size: "small" } }}
-//             onChange={(newDate) => handleDateChange(newDate)}
-//           />
-//         </DemoItem>
-//       </LocalizationProvider>
-//     );
-//   }
-
-// export default CustomDateInput;
 

@@ -4,6 +4,11 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import Layout from './Components/01-LayoutArea/01-Layout/Layout';
+import {Provider} from 'react-redux'
+import storeNew from './Redux/UserStore';
+import createInterceptors from './Services/InterceptorService';
+
+createInterceptors();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -11,7 +16,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-        < Layout />
+    < Provider store={storeNew}>
+          < Layout />
+    </Provider>
     </BrowserRouter>
   </React.StrictMode>
 );

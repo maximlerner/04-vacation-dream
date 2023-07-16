@@ -26,13 +26,10 @@ class DevelopmentConfig extends Config {
 
 class ProductionConfig extends Config {
   public constructor() {
-    super("http://localhost:3001/api/");
+    super("https://vacation-dream-9304bc3afa84.herokuapp.com/api/");
   }
 }
 
-const config =
-  process.env.NODE_ENV === "development"
-    ? new DevelopmentConfig()
-    : new ProductionConfig();
+const config = process.env.NODE_ENV === "development" ? new DevelopmentConfig(): new ProductionConfig();
 
 export default config;

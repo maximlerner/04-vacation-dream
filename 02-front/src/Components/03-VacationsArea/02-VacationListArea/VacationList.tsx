@@ -9,11 +9,8 @@ import LoadingSpinner from "../05-LoadingSpinner/LoadingSpinner";
 import vacationService from "../../../Services/VacationService";
 import vacationsStore from "../../../Redux/Store";
 
-interface MainProps {
-  userType: string;
-}
 
-function VacationsList({userType}: MainProps): JSX.Element {
+function VacationsList(): JSX.Element {
   const [vacationList, setVacationList] = useState<VacationModel[]>([]);
   const [filteredVacations,onSetFilterVacations] = useState<VacationModel[]>([]);
   const [filtered,setFiltered] = useState(false);
@@ -27,12 +24,17 @@ function VacationsList({userType}: MainProps): JSX.Element {
   const currentCardsOriginal = vacationsStore.getState().vacations.slice(firstCardIndex, lastCardIndex);
   const currentCardsFiltered = filteredVacations.slice(firstCardIndex,lastCardIndex);
   const lastPage = Math.ceil(filtered ? currentCardsFiltered.length / cardsPerPage :vacationsStore.getState().vacations.length / cardsPerPage);
+  const [user,setUser] = useState<string>("");
+  console.log(user);
 
 
   useEffect(() => {
     vacationService.getAllVacations(setVacationList, setError);
     setDeleting(false);
   })
+
+
+
 
 
   const [error,setError] = useState("");
@@ -51,7 +53,6 @@ function VacationsList({userType}: MainProps): JSX.Element {
             <Card
               onSetCurrentPage={setCurrentPage}
               setVacations={setVacationList}
-              userType={userType}
               key={index}
               vacation={vacation}
               setDeleting={setDeleting}
@@ -65,7 +66,6 @@ function VacationsList({userType}: MainProps): JSX.Element {
             <Card
               setVacations={setVacationList}
               onSetCurrentPage={setCurrentPage}
-              userType={userType}
               key={index}
               vacation={vacation}
               setDeleting={setDeleting}
@@ -83,7 +83,7 @@ function VacationsList({userType}: MainProps): JSX.Element {
         <p className={classes.noResults}>No Results</p>
       )}
       {(vacationsStore.getState().vacations.length === 0 && error === "")  && <LoadingSpinner />}
-      {/* <p>{error ? error : ""}</p> */}
+      <p className={classes.noResults}>{error ? error : ""}</p>
     </div>
   );
 }

@@ -1,28 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { FaBookmark, FaTrash, FaEdit} from "react-icons/fa";
+
 import classes from "./Card.module.css";
 import VacationModel from "../../../Models/VacationModel";
 import config from "../../../Utils/Config";
 import VacationService from "../../../Services/VacationService";
-import vacationsStore from "../../../Redux/Store";
+import { selectUser } from "../../../Redux/UserSlice";
 
 interface CardProps {
   vacation: VacationModel;
-  userType: string;
   setDeleting: Function;
   onSetCurrentPage: Function;
   setVacations: Function;
 }
 
-function Card({vacation,userType,setDeleting,onSetCurrentPage,setVacations}: CardProps): JSX.Element {
+function Card({vacation,setDeleting,onSetCurrentPage,setVacations}: CardProps): JSX.Element {
   const newFormatStart = new Date(vacation.dateStart).toLocaleDateString();
   const newFormatEnd = new Date(vacation.dateStart).toLocaleDateString();
 
   const [activeSubscribe, setActiveSubscribe] = useState(false);
+  const user = useSelector(selectUser);
+  const [role,setRole] = useState("");
   const navigate = useNavigate();
 
-  console.log(vacationsStore.getState().vacations);
+  useEffect(() => {
+    setRole(user.user[0]?.role);
+  },[])
 
   function handleNavigateToUpdate(vacation: VacationModel) {
     console.log(vacation)
@@ -49,7 +55,7 @@ function Card({vacation,userType,setDeleting,onSetCurrentPage,setVacations}: Car
         <p>End at :{newFormatEnd}</p>
       </div>
       <div className={classes.cardFooter}>
-        {userType === "Admin" && (
+        {role === "2" && (
           <div className={classes.actionDelete}>
             <FaTrash
               className={classes.delete}
@@ -62,7 +68,7 @@ function Card({vacation,userType,setDeleting,onSetCurrentPage,setVacations}: Car
 
         <p className={classes.price}>Price : ${vacation.price}</p>
 
-        {userType === "User" && (
+        {role === "1" && (
           <div className={activeSubscribe ? classes.actionsUser : ""}>
             <FaBookmark
               className={
@@ -75,7 +81,7 @@ function Card({vacation,userType,setDeleting,onSetCurrentPage,setVacations}: Car
           </div>
         )}
 
-        {userType === "Admin" && (
+        {role === "2" && (
           <div className={classes.actionEdit}>
             <FaEdit
               className={classes.edit}

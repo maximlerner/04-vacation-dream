@@ -7,8 +7,6 @@ class CredentialsModel {
         this.userName = credentials.userName;
         this.password = credentials.password;
     }
-
-
 }
 
 export default CredentialsModel;

@@ -1,15 +1,22 @@
+import { useEffect, useState } from "react";
 import classes from "./Nav.module.css"
 import {NavLink} from "react-router-dom";
+import { useSelector } from "react-redux";
+import { selectUser } from "../../../Redux/UserSlice";
 
 interface NavProps {
-    user: {
-        role: string;
-    }
     onSetActive?: Function;
     active?: boolean;
 }
 
-function Nav({user,onSetActive,active}: NavProps):JSX.Element {
+function Nav({onSetActive,active}: NavProps):JSX.Element {
+
+    const user = useSelector(selectUser);
+    const [role,setRole] = useState("");
+
+    useEffect(() => {
+        setRole(user.user[0]?.role);
+    },[user])
 
     function handleClick() {
         if(onSetActive) {
@@ -30,21 +37,21 @@ function Nav({user,onSetActive,active}: NavProps):JSX.Element {
             </NavLink>
 
             {/* Link to Add-Vacation page */}
-            {user?.role === 'Admin' && <NavLink 
+            {role === '2' && <NavLink 
                 onClick={handleClick} 
                 className={({isActive}) => (isActive ? `${classes.link} ${classes.active}` : classes.link)}
                 to="/addVacation" >Add-Vacation
             </NavLink>}
 
             {/* Link to Register page */}
-            {!user?.role &&<NavLink 
+            {!role &&<NavLink 
                 onClick={handleClick} 
                 className={({isActive}) => (isActive ? `${classes.link} ${classes.active}` : classes.link)}
                 to="/register" >Register
             </NavLink>}
 
             {/* Link to Login page */}
-            {!user?.role && <NavLink 
+            {!role && <NavLink 
                 onClick={handleClick} 
                 className={({isActive}) => (isActive ? `${classes.link} ${classes.active}` : classes.link)}
                 to="/login" >Login
@@ -65,7 +72,7 @@ function Nav({user,onSetActive,active}: NavProps):JSX.Element {
             </NavLink>
 
             {/* Link to Logout page */}
-            {user?.role && <NavLink 
+            {role && <NavLink 
                 onClick={handleClick} 
                 className={({isActive}) => (isActive ? `${classes.link} ${classes.active}` : classes.link)} 
                 to="/logout" >Logout

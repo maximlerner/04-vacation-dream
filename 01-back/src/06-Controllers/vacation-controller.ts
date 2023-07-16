@@ -32,7 +32,7 @@ router.get('/:id', async (request: Request, response: Response,next: NextFunctio
 });
 
 // Example: Add new vacation from http://localhost:3001/api/vacations/
-router.post('/',async (request: Request, response: Response,next: NextFunction) => {
+router.post('/',verifyToken,verifyAdmin,async (request: Request, response: Response,next: NextFunction) => {
     try {
         request.body.image = request.files?.image;
         request.body.followers = 0;
@@ -46,7 +46,7 @@ router.post('/',async (request: Request, response: Response,next: NextFunction) 
 });
 
 // Example: Update full vacation from http://localhost:3001/api/vacations/1
-router.put('/:id',async (request: Request, response: Response,next: NextFunction) => {
+router.put('/:id',verifyToken,verifyAdmin,async (request: Request, response: Response,next: NextFunction) => {
     try {
         const id = Number(request.params.id);
         console.log("id:" + id);
@@ -64,7 +64,7 @@ router.put('/:id',async (request: Request, response: Response,next: NextFunction
 });
 
 // Example: Update partial vacation from http://localhost:3001/api/vacations/1
-router.patch('/:id',verifyToken, async (request: Request, response: Response,next: NextFunction) => {
+router.patch('/:id',verifyToken,verifyAdmin, async (request: Request, response: Response,next: NextFunction) => {
     try {
         const id = Number(request.params.id);
         request.body.vacationID = id;

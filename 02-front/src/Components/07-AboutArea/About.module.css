@@ -39,7 +39,6 @@
     margin-top: 1rem;
     padding:0.5rem 1.6rem;
     font-size: 1rem;
-
 }
 
 .react,
@@ -75,7 +74,7 @@ li {
 }
 
 /***********************************/
-/* Below 1008px (Lanscape Tablets) done */
+/* Below 1008px (Tablets) done */
 /***********************************/
 @media(max-width: 63em) {
     .about {
@@ -85,7 +84,7 @@ li {
 }
 
 /***********************************/
-/* Below 752px (Lanscape Tablets) done */
+/* Below 752px (Small Tablets) done */
 /***********************************/
 @media(max-width: 47em) {
     .aboutBody {

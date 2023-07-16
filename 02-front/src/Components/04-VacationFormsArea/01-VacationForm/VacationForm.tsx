@@ -51,17 +51,17 @@ function VacationForm(): JSX.Element {
 
   async function submit(vacation: VacationModel) {
     try {
-      const vacationsWithDates: VacationModel = {...vacation,imageName: ""};
-      vacationsWithDates.dateStart = new Date(vacation.dateStart);
-      vacationsWithDates.dateEnd = new Date(vacation.dateEnd);
+      vacation.imageName = "";
+      vacation.dateStart = new Date(vacation.dateStart);
+      vacation.dateEnd = new Date(vacation.dateEnd);
 
       if(id && vacationToUpdate) {
-        vacationsWithDates.followers = vacationToUpdate.followers;
-        vacationsWithDates.imageName = vacationToUpdate.imageName;
-        await vacationService.updateVacation(+id,vacationsWithDates);
+        vacation.followers = vacationToUpdate.followers;
+        vacation.imageName = vacationToUpdate.imageName;
+        await vacationService.updateVacation(+id,vacation);
       }
       if(newVacation) {
-        await vacationService.createVacation(vacationsWithDates);
+        await vacationService.createVacation(vacation);
       }
       navigate("/home")
     } 
@@ -177,22 +177,4 @@ function VacationForm(): JSX.Element {
 
 export default VacationForm;
 
-
-
-
-
-
-
-
-function setNewVacation(arg0: boolean) {
-  throw new Error("Function not implemented.");
-}
-
-function navigate(arg0: string) {
-  throw new Error("Function not implemented.");
-}
-
-function setError(data: any) {
-  throw new Error("Function not implemented.");
-}
 
